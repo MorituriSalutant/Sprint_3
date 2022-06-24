@@ -1,4 +1,4 @@
-package courierBody;
+package courier;
 
 public class CourierCreateJson {
     private String login;
