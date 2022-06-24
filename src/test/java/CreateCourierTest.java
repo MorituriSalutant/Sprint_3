@@ -20,7 +20,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Курьера можно создать")
-    public void createCourierTest(){
+    public void createCourierTest() {
         String rndLogin = RandomStringUtils.random(15, true, true);
         String rndPassword = RandomStringUtils.random(15, true, true);
         String rndFirstName = RandomStringUtils.random(15, true, false);
@@ -33,14 +33,16 @@ public class CreateCourierTest {
                         .body(courier)
                         .post("/api/v1/courier");
 
-        response.then().assertThat().body("ok",notNullValue())
+        response.then()
+                .assertThat()
+                .body("ok", notNullValue())
                 .and()
                 .statusCode(201);
     }
 
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
-    public void cantCreateBothCourierTest(){
+    public void cantCreateBothCourierTest() {
         String rndLogin = RandomStringUtils.random(15, true, true);
         String rndPassword = RandomStringUtils.random(15, true, true);
         String rndFirstName = RandomStringUtils.random(15, true, false);
@@ -60,12 +62,16 @@ public class CreateCourierTest {
                         .body(courier)
                         .post("/api/v1/courier");
 
-        createSecondCourierResponse.then().statusCode(409);
+        createSecondCourierResponse.then()
+                .assertThat()
+                .body("message", equalTo("Этот логин уже используется. Попробуйте другой."))
+                .and()
+                .statusCode(409);
     }
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
-    public void ifAttributeLoginIsEmptyThenReturnError(){
+    public void ifAttributeLoginIsEmptyThenReturnError() {
         String rndLogin = RandomStringUtils.random(15, true, true);
         String rndPassword = RandomStringUtils.random(15, true, true);
 
@@ -80,7 +86,9 @@ public class CreateCourierTest {
                         .body(courier)
                         .post("/api/v1/courier");
 
-        response.then().assertThat().body("ok",notNullValue())
+        response.then()
+                .assertThat()
+                .body("ok", notNullValue())
                 .and()
                 .statusCode(201);
     }
@@ -118,14 +126,18 @@ public class CreateCourierTest {
                         .body(courier)
                         .post("/api/v1/courier");
 
-        response.then().assertThat().body("ok",equalTo(true));
+        response.then()
+                .assertThat()
+                .body("ok", equalTo(true))
+                .and()
+                .statusCode(201);
     }
 
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
-    public void requiredAttributeLoginTest(){
-        
+    public void requiredAttributeLoginTest() {
+
         String rndPassword = RandomStringUtils.random(15, true, true);
         String rndFirstName = RandomStringUtils.random(15, true, false);
         CourierCreateJson courier = new CourierCreateJson();
@@ -141,14 +153,14 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("code",equalTo(400))
-                .body("message",equalTo("Недостаточно данных для создания учетной записи"))
+                .body("code", equalTo(400))
+                .body("message", equalTo("Недостаточно данных для создания учетной записи"))
                 .statusCode(400);
     }
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
-    public void requiredAttributePasswordTest(){
+    public void requiredAttributePasswordTest() {
         String rndLogin = RandomStringUtils.random(15, true, true);
         String rndFirstName = RandomStringUtils.random(15, true, false);
 
@@ -165,14 +177,14 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("code",equalTo(400))
-                .body("message",equalTo("Недостаточно данных для создания учетной записи"))
+                .body("code", equalTo(400))
+                .body("message", equalTo("Недостаточно данных для создания учетной записи"))
                 .statusCode(400);
     }
 
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
-    public void cantCreateCourierWithSameLoginTest(){
+    public void cantCreateCourierWithSameLoginTest() {
         String rndLogin = RandomStringUtils.random(15, true, true);
         String rndPassword = RandomStringUtils.random(15, true, true);
         String rndFirstName = RandomStringUtils.random(15, true, false);
@@ -194,12 +206,10 @@ public class CreateCourierTest {
 
         createSecondCourierResponse.then()
                 .assertThat()
-                .body("code",equalTo(409))
-                .body("message",equalTo("Этот логин уже используется. Попробуйте другой."))
+                .body("code", equalTo(409))
+                .body("message", equalTo("Этот логин уже используется. Попробуйте другой."))
                 .statusCode(409);
     }
-
-
 
 
 }
