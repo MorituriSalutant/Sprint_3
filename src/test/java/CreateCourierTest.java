@@ -2,9 +2,11 @@ import courier.CourierCreateJson;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -12,26 +14,22 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class CreateCourierTest {
 
+    CourierCreateJson courier;
+
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
-    }
 
+        courier = new CourierCreateJson(
+                "LoginTestApi" + new Random().nextInt(1000),
+                "PasswordTestApi" + new Random().nextInt(1000),
+                "FirstNameTestApi" + new Random().nextInt(1000));
+    }
 
     @Test
     @DisplayName("Курьера можно создать")
     public void createCourierTest() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson(rndLogin, rndPassword, rndFirstName);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        Response response = postMethodCreateCourier();
 
         response.then()
                 .assertThat()
@@ -43,26 +41,12 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void cantCreateBothCourierTest() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson(rndLogin, rndPassword, rndFirstName);
+        //Отправили первый запрос на создание, он успешный
+        postMethodCreateCourier();
+        //Отправили второй запрос на создание, он ошибочный
+        Response response = postMethodCreateCourier();
 
-        Response createFirstCourierResponse =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
-
-        Response createSecondCourierResponse =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
-
-        createSecondCourierResponse.then()
+        response.then()
                 .assertThat()
                 .body("message", equalTo("Этот логин уже используется. Попробуйте другой."))
                 .and()
@@ -72,19 +56,8 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
     public void ifAttributeLoginIsEmptyThenReturnError() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-
-        CourierCreateJson courier = new CourierCreateJson();
-        courier.setLogin(rndLogin);
-        courier.setPassword(rndPassword);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        courier.setFirstName(null);
+        Response response = postMethodCreateCourier();
 
         response.then()
                 .assertThat()
@@ -96,17 +69,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Запрос возвращает правильный код ответа")
     public void createCourierAccountTest() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson(rndLogin, rndPassword, rndFirstName);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        Response response = postMethodCreateCourier();
 
         response.then().statusCode(201);
     }
@@ -114,17 +77,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Успешный запрос возвращает ok: true")
     public void createResponseReturnValidBody() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson(rndLogin, rndPassword, rndFirstName);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        Response response = postMethodCreateCourier();
 
         response.then()
                 .assertThat()
@@ -133,23 +86,11 @@ public class CreateCourierTest {
                 .statusCode(201);
     }
 
-
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
     public void requiredAttributeLoginTest() {
-
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson();
-        courier.setPassword(rndPassword);
-        courier.setFirstName(rndFirstName);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        courier.setLogin(null);
+        Response response = postMethodCreateCourier();
 
         response.then()
                 .assertThat()
@@ -161,19 +102,8 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
     public void requiredAttributePasswordTest() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-
-        CourierCreateJson courier = new CourierCreateJson();
-        courier.setLogin(rndLogin);
-        courier.setFirstName(rndFirstName);
-
-        Response response =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
+        courier.setPassword(null);
+        Response response = postMethodCreateCourier();
 
         response.then()
                 .assertThat()
@@ -185,31 +115,28 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void cantCreateCourierWithSameLoginTest() {
-        String rndLogin = RandomStringUtils.random(15, true, true);
-        String rndPassword = RandomStringUtils.random(15, true, true);
-        String rndFirstName = RandomStringUtils.random(15, true, false);
-        CourierCreateJson courier = new CourierCreateJson(rndLogin, rndPassword, rndFirstName);
+        //Отправили первый запрос на создание, он успешный
+        postMethodCreateCourier();
+        //Отправили второй запрос на создание, он ошибочный
+        Response response = postMethodCreateCourier();
 
-        Response createFirstCourierResponse =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
-
-        Response createSecondCourierResponse =
-                given()
-                        .header("Content-type", "application/json")
-                        .and()
-                        .body(courier)
-                        .post("/api/v1/courier");
-
-        createSecondCourierResponse.then()
+        response.then()
                 .assertThat()
                 .body("code", equalTo(409))
                 .body("message", equalTo("Этот логин уже используется. Попробуйте другой."))
                 .statusCode(409);
     }
 
+    @After
+    public void tearDown() {
+        System.out.println("Удалить аккаунт");
+    }
 
+    public Response postMethodCreateCourier() {
+        return given()
+                .header("Content-type", "application/json")
+                .and()
+                .body(courier)
+                .post("/api/v1/courier");
+    }
 }
