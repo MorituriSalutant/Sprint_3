@@ -14,13 +14,13 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class CreateCourierTest {
 
-    CourierCreateJson courier;
+    CourierCreateJson courierCreateJson;
 
     @Before
     public void setUp() {
         RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
 
-        courier = new CourierCreateJson(
+        courierCreateJson = new CourierCreateJson(
                 "LoginTestApi" + new Random().nextInt(1000),
                 "PasswordTestApi" + new Random().nextInt(1000),
                 "FirstNameTestApi" + new Random().nextInt(1000));
@@ -56,7 +56,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
     public void ifAttributeLoginIsEmptyThenReturnError() {
-        courier.setFirstName(null);
+        courierCreateJson.setFirstName(null);
         Response response = postMethodCreateCourier();
 
         response.then()
@@ -89,7 +89,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
     public void requiredAttributeLoginTest() {
-        courier.setLogin(null);
+        courierCreateJson.setLogin(null);
         Response response = postMethodCreateCourier();
 
         response.then()
@@ -102,7 +102,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
     public void requiredAttributePasswordTest() {
-        courier.setPassword(null);
+        courierCreateJson.setPassword(null);
         Response response = postMethodCreateCourier();
 
         response.then()
@@ -136,7 +136,7 @@ public class CreateCourierTest {
         return given()
                 .header("Content-type", "application/json")
                 .and()
-                .body(courier)
+                .body(courierCreateJson)
                 .post("/api/v1/courier");
     }
 }
