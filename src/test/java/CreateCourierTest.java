@@ -16,12 +16,8 @@ public class CreateCourierTest {
 
     @Before
     public void setUp() {
-        courierCreateJson = new CourierCreateJson(
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true));
-
         courierApiClient = new CourierApiClient();
+        courierCreateJson = courierApiClient.generateAccount();
     }
 
     @Test

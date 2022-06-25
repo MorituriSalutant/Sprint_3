@@ -1,5 +1,6 @@
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import pojo.courieir.CourierCreateJson;
 import pojo.courieir.CourierLoginJson;
 
@@ -23,5 +24,12 @@ public class CourierApiClient {
                 .contentType(ContentType.JSON)
                 .body(jsonBody)
                 .post("/api/v1/courier/login");
+    }
+
+    public CourierCreateJson generateAccount(){
+        return new CourierCreateJson(
+                RandomStringUtils.random(15, true, true),
+                RandomStringUtils.random(15, true, true),
+                RandomStringUtils.random(15, true, true));
     }
 }

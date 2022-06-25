@@ -17,18 +17,12 @@ public class LoginCourierTest {
 
     @Before
     public void setUp() {
-        courierCreateJson = new CourierCreateJson(
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true));
-
+        courierApiClient = new CourierApiClient();
+        courierCreateJson = courierApiClient.generateAccount();
         courierLoginJson = new CourierLoginJson(
                 courierCreateJson.getLogin(),
                 courierCreateJson.getPassword());
-
-        courierApiClient = new CourierApiClient();
         courierApiClient.postMethodCreateCourier(courierCreateJson);
-
     }
 
     @Test
