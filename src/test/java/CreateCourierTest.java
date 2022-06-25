@@ -1,6 +1,4 @@
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
@@ -8,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import pojo.courieir.CourierCreateJson;
 
-import java.util.Random;
-
-import static io.restassured.RestAssured.with;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -21,13 +16,11 @@ public class CreateCourierTest {
 
     @Before
     public void setUp() {
-        RestAssured.baseURI = "https://qa-scooter.praktikum-services.ru";
-
         courierCreateJson = new CourierCreateJson(
-                RandomStringUtils.random(15,true,true),
-                RandomStringUtils.random(15,true,true),
-                RandomStringUtils.random(15,true,true));
-        
+                RandomStringUtils.random(15, true, true),
+                RandomStringUtils.random(15, true, true),
+                RandomStringUtils.random(15, true, true));
+
         courierApiClient = new CourierApiClient();
     }
 
@@ -136,5 +129,5 @@ public class CreateCourierTest {
     public void tearDown() {
         System.out.println("Удалить аккаунт");
     }
-    
+
 }
