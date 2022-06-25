@@ -28,7 +28,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Курьера можно создать")
-    public void createCourierTest() {
+    public void whenPostCreateThenReturnSuccess() {
         Response response = postMethodCreateCourier();
 
         response.then()
@@ -40,7 +40,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
-    public void cantCreateBothCourierTest() {
+    public void whenIdenticallyPostCreateThenReturnError() {
         //Отправили первый запрос на создание, он успешный
         postMethodCreateCourier();
         //Отправили второй запрос на создание, он ошибочный
@@ -55,7 +55,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
-    public void ifAttributeLoginIsEmptyThenReturnError() {
+    public void whenPostCreateWithoutNameThenReturnValidBody() {
         courierCreateJson.setFirstName(null);
         Response response = postMethodCreateCourier();
 
@@ -68,7 +68,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Запрос возвращает правильный код ответа")
-    public void createCourierAccountTest() {
+    public void whenPostCreateThenReturnValidStatusCode() {
         Response response = postMethodCreateCourier();
 
         response.then().statusCode(201);
@@ -76,7 +76,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Успешный запрос возвращает ok: true")
-    public void createResponseReturnValidBody() {
+    public void whenPostCreateThenReturnValidBody() {
         Response response = postMethodCreateCourier();
 
         response.then()
@@ -88,7 +88,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
-    public void requiredAttributeLoginTest() {
+    public void whenPostCreateWithoutLoginThenReturnError() {
         courierCreateJson.setLogin(null);
         Response response = postMethodCreateCourier();
 
@@ -101,7 +101,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
-    public void requiredAttributePasswordTest() {
+    public void whenPostCreateWithoutPasswordThenReturnError() {
         courierCreateJson.setPassword(null);
         Response response = postMethodCreateCourier();
 
@@ -114,7 +114,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Нельзя создать двух одинаковых курьеров")
-    public void cantCreateCourierWithSameLoginTest() {
+    public void whenIdenticallyLoginPostCreateThenReturnError() {
         //Отправили первый запрос на создание, он успешный
         postMethodCreateCourier();
         //Отправили второй запрос на создание, он ошибочный
