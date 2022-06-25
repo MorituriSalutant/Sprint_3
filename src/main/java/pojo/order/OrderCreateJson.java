@@ -1,6 +1,7 @@
 package pojo.order;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderCreateJson {
     public String firstName;
@@ -11,12 +12,12 @@ public class OrderCreateJson {
     public int rentTime;
     public String deliveryDate;
     public String comment;
-    public ArrayList<String> color;
+    public List<String> color;
 
     public OrderCreateJson() {
     }
 
-    public OrderCreateJson(String firstName, String lastName, String address, int metroStation, String phone, int rentTime, String deliveryDate, String comment, ArrayList<String> color) {
+    public OrderCreateJson(String firstName, String lastName, String address, int metroStation, String phone, int rentTime, String deliveryDate, String comment, List<String> color) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -92,7 +93,7 @@ public class OrderCreateJson {
         this.comment = comment;
     }
 
-    public ArrayList<String> getColor() {
+    public List<String> getColor() {
         return color;
     }
 
