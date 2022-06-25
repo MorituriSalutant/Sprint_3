@@ -1,15 +1,17 @@
-package json.courieir;
+package pojo.courieir;
 
-public class CourierLoginJson {
+public class CourierCreateJson {
     private String login;
     private String password;
+    private String firstName;
 
-    public CourierLoginJson() {
+    public CourierCreateJson() {
     }
 
-    public CourierLoginJson(String login, String password) {
+    public CourierCreateJson(String login, String password, String firstName) {
         this.login = login;
         this.password = password;
+        this.firstName = firstName;
     }
 
     public String getLogin() {
@@ -27,4 +29,13 @@ public class CourierLoginJson {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
 }
