@@ -12,7 +12,7 @@ public class CourierApiClient {
 
     private final String BASE_URL = "https://qa-scooter.praktikum-services.ru";
 
-    public Response postMethodCreateCourier(CourierCreateJson jsonBody) {
+    public Response createCourier(CourierCreateJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
                 .contentType(ContentType.JSON)
@@ -20,7 +20,7 @@ public class CourierApiClient {
                 .post("/api/v1/courier");
     }
 
-    public Response postMethodLoginCourier(CourierLoginJson jsonBody) {
+    public Response loginCourier(CourierLoginJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
                 .contentType(ContentType.JSON)
@@ -28,13 +28,11 @@ public class CourierApiClient {
                 .post("/api/v1/courier/login");
     }
 
-    //TODO Удалить аккаунты
-//    public Response deleteMethodDeleteCourier(CourierLoginJson jsonBody){
-//        return with()
-//                .baseUri(BASE_URL)
-//                .queryParam(Long.toString(jsonBody.getId()))
-//                .delete("/api/v1/courier/");
-//    }
+    public Response deleteMethodDeleteCourier(CourierLoginJson jsonBody){
+        return with()
+                .baseUri(BASE_URL)
+                .delete("/api/v1/courier/");
+    }
 
     public CourierCreateJson generateAccount() {
         return new CourierCreateJson(

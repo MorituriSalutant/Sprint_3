@@ -23,7 +23,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Курьера можно создать")
     public void whenPostCreateThenReturnSuccess() {
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -36,9 +36,9 @@ public class CreateCourierTest {
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void whenIdenticallyPostCreateThenReturnError() {
         //Отправили первый запрос на создание, он успешный
-        courierApiClient.postMethodCreateCourier(courierCreateJson);
+        courierApiClient.createCourier(courierCreateJson);
         //Отправили второй запрос на создание, он ошибочный
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -51,7 +51,7 @@ public class CreateCourierTest {
     @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
     public void whenPostCreateWithoutNameThenReturnValidBody() {
         courierCreateJson.setFirstName(null);
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -63,7 +63,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Запрос возвращает правильный код ответа")
     public void whenPostCreateThenReturnValidStatusCode() {
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then().statusCode(201);
     }
@@ -71,7 +71,7 @@ public class CreateCourierTest {
     @Test
     @DisplayName("Успешный запрос возвращает ok: true")
     public void whenPostCreateThenReturnValidBody() {
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -84,7 +84,7 @@ public class CreateCourierTest {
     @DisplayName("Чтобы создать курьера, нужно передать login")
     public void whenPostCreateWithoutLoginThenReturnError() {
         courierCreateJson.setLogin(null);
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -97,7 +97,7 @@ public class CreateCourierTest {
     @DisplayName("Чтобы создать курьера, нужно передать password")
     public void whenPostCreateWithoutPasswordThenReturnError() {
         courierCreateJson.setPassword(null);
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()
@@ -110,9 +110,9 @@ public class CreateCourierTest {
     @DisplayName("Нельзя создать двух одинаковых курьеров")
     public void whenIdenticallyLoginPostCreateThenReturnError() {
         //Отправили первый запрос на создание, он успешный
-        courierApiClient.postMethodCreateCourier(courierCreateJson);
+        courierApiClient.createCourier(courierCreateJson);
         //Отправили второй запрос на создание, он ошибочный
-        Response response = courierApiClient.postMethodCreateCourier(courierCreateJson);
+        Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
                 .assertThat()

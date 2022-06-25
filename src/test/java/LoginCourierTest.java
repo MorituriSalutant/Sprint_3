@@ -28,13 +28,13 @@ public class LoginCourierTest {
                 courierCreateJson.getPassword()
         );
 
-        courierApiClient.postMethodCreateCourier(courierCreateJson);
+        courierApiClient.createCourier(courierCreateJson);
     }
 
     @Test
     @DisplayName("Курьер может авторизоваться")
     public void whenPostLoginThenReturnSuccess() {
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -46,7 +46,7 @@ public class LoginCourierTest {
     @Test
     @DisplayName("Для авторизации нужно передать все обязательные поля")
     public void whenPostLoginThenReturnSuccessSame() {
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -60,7 +60,7 @@ public class LoginCourierTest {
     public void whenPostLoginWithIncorrectLoginThenReturnError() {
         courierLoginJson.setLogin(RandomStringUtils.random(15, true, true));
 
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -74,7 +74,7 @@ public class LoginCourierTest {
     public void whenPostLoginWithIncorrectPasswordThenReturnError() {
         courierLoginJson.setPassword(RandomStringUtils.random(15, true, true));
 
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -88,7 +88,7 @@ public class LoginCourierTest {
     public void whenPostLoginWithoutLoginThenReturnError() {
         courierLoginJson.setLogin(null);
 
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -103,7 +103,7 @@ public class LoginCourierTest {
     public void whenPostLoginWithoutPasswordThenReturnError() {
         courierLoginJson.setPassword(null);
 
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
                 .assertThat()
@@ -115,7 +115,7 @@ public class LoginCourierTest {
     @Test
     @DisplayName("Успешный запрос возвращает id")
     public void whenPostLoginThenReturnId() {
-        Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
+        Response response = courierApiClient.loginCourier(courierLoginJson);
 
         System.out.println(response.asString());
 
