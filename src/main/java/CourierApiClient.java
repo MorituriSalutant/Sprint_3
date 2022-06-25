@@ -26,7 +26,15 @@ public class CourierApiClient {
                 .post("/api/v1/courier/login");
     }
 
-    public CourierCreateJson generateAccount(){
+    //TODO Удалить аккаунты
+//    public Response deleteMethodDeleteCourier(CourierLoginJson jsonBody){
+//        return with()
+//                .baseUri(BASE_URL)
+//                .queryParam(Long.toString(jsonBody.getId()))
+//                .delete("/api/v1/courier/");
+//    }
+
+    public CourierCreateJson generateAccount() {
         return new CourierCreateJson(
                 RandomStringUtils.random(15, true, true),
                 RandomStringUtils.random(15, true, true),

@@ -3,6 +3,7 @@ package pojo.courieir;
 public class CourierLoginJson {
     private String login;
     private String password;
+    private long id;
 
     public CourierLoginJson() {
     }

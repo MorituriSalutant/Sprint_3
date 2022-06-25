@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -18,10 +20,13 @@ public class LoginCourierTest {
     @Before
     public void setUp() {
         courierApiClient = new CourierApiClient();
+
         courierCreateJson = courierApiClient.generateAccount();
         courierLoginJson = new CourierLoginJson(
                 courierCreateJson.getLogin(),
-                courierCreateJson.getPassword());
+                courierCreateJson.getPassword()
+        );
+
         courierApiClient.postMethodCreateCourier(courierCreateJson);
     }
 
@@ -111,6 +116,8 @@ public class LoginCourierTest {
     public void whenPostLoginThenReturnId() {
         Response response = courierApiClient.postMethodLoginCourier(courierLoginJson);
 
+        System.out.println(response.asString());
+
         response.then()
                 .assertThat()
                 .body("id", notNullValue())
@@ -121,7 +128,8 @@ public class LoginCourierTest {
 
     @After
     public void tearDown() {
-        System.out.println("Удалить аккаунт");
+        Gson json = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println("Генерировали = " + json.toJson(courierCreateJson));
     }
 
 
