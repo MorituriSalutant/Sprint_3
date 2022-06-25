@@ -1,4 +1,4 @@
-import courier.CourierCreateJson;
+import json.courieir.CourierCreateJson;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
