@@ -1,5 +1,6 @@
 package api.client;
 
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import pojo.courieir.CourierCreateJson;
@@ -11,6 +12,7 @@ public class CourierApiClient {
 
     private final String BASE_URL = "https://qa-scooter.praktikum-services.ru";
 
+    @Step("Отправка запроса на создание курьера POST /api/v1/courier")
     public Response createCourier(CourierCreateJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
@@ -19,6 +21,7 @@ public class CourierApiClient {
                 .post("/api/v1/courier");
     }
 
+    @Step("Отправка запроса на авторизацию курьера POST /api/v1/courier/login" )
     public Response loginCourier(CourierLoginJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
@@ -27,6 +30,7 @@ public class CourierApiClient {
                 .post("/api/v1/courier/login");
     }
 
+    @Step("Отправка запроса на удаление курьера DELETE /api/v1/courier/id")
     public void deleteCourier(String id) {
         with()
                 .baseUri(BASE_URL)

@@ -1,4 +1,6 @@
 import api.client.CourierApiClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.After;
@@ -9,6 +11,7 @@ import pojo.courieir.CourierCreateJson;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+@Feature("Создание курьера")
 public class CreateCourierTest {
 
     CourierCreateJson courierCreateJson;
@@ -21,7 +24,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    @DisplayName("Курьера можно создать")
+    @DisplayName("Создание курьера")
+    @Description("Проверяет создание курьера по POST /api/v1/courier")
     public void whenPostCreateThenReturnSuccess() {
         Response response = courierApiClient.createCourier(courierCreateJson);
 
@@ -33,7 +37,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    @DisplayName("Нельзя создать двух одинаковых курьеров")
+    @DisplayName("Двойное создание курьера")
+    @Description("Проверяет что нельзя создать курьера дважды с одними данными")
     public void whenIdenticallyPostCreateThenReturnError() {
         //Отправили первый запрос на создание, он успешный
         courierApiClient.createCourier(courierCreateJson);
@@ -48,7 +53,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    @DisplayName("Чтобы создать курьера, нужно передать обязательные Login и Password")
+    @DisplayName("Обязательные поля для создания")
+    @Description("Проверяет,что для создания нужно передать обязательные поля Login и Password, без Firstname")
     public void whenPostCreateWithoutNameThenReturnValidBody() {
         courierCreateJson.setFirstName(null);
         Response response = courierApiClient.createCourier(courierCreateJson);
@@ -62,6 +68,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Запрос возвращает правильный код ответа")
+    @Description("Проверка что запрос на создание возвращает правильный статус код - 201")
     public void whenPostCreateThenReturnValidStatusCode() {
         Response response = courierApiClient.createCourier(courierCreateJson);
 
@@ -70,7 +77,8 @@ public class CreateCourierTest {
     }
 
     @Test
-    @DisplayName("Успешный запрос возвращает ok: true")
+    @DisplayName("Запрос возвращает правильное тело")
+    @Description("Проверка что запрос на создание возвращает правильное тело - ok: true")
     public void whenPostCreateThenReturnValidBody() {
         Response response = courierApiClient.createCourier(courierCreateJson);
 
@@ -83,6 +91,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
+    @Description("Проверяет, что без передачи поля Login создания не происходит")
     public void whenPostCreateWithoutLoginThenReturnError() {
         courierCreateJson.setLogin(null);
         Response response = courierApiClient.createCourier(courierCreateJson);
@@ -96,6 +105,7 @@ public class CreateCourierTest {
 
     //TODO Не работает сервис без пароля
     @DisplayName("Чтобы создать курьера, нужно передать password")
+    @Description("Проверяет, что без передачи поля Password создания не происходит")
     public void whenPostCreateWithoutPasswordThenReturnError() {
         courierCreateJson.setPassword(null);
         Response response = courierApiClient.createCourier(courierCreateJson);

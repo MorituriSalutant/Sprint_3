@@ -1,4 +1,6 @@
 import api.client.OrderApiClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.junit.Before;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.notNullValue;
 
+@Feature("Создание заказов")
 @RunWith(Parameterized.class)
 public class OrderCreateTest {
     public String firstName;
@@ -100,7 +103,8 @@ public class OrderCreateTest {
     }
 
     @Test
-    @DisplayName("Тело ответа содержит track")
+    @DisplayName("Создание заказа")
+    @Description("Проверяет что тело заказа содержит поле Track")
     public void whenPostOrderThenReturnTrack() {
         Response response = orderApiClient.createOrder(orderCreateJson);
 

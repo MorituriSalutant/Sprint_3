@@ -1,4 +1,6 @@
 import api.client.CourierApiClient;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -11,6 +13,7 @@ import pojo.courieir.CourierLoginJson;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+@Feature("Авторизация курьера")
 public class LoginCourierTest {
     CourierCreateJson courierCreateJson;
     CourierLoginJson courierLoginJson;
@@ -26,6 +29,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Курьер может авторизоваться")
+    @Description("Проверяет авторизацию курьера по POST /api/v1/courier/login")
     public void whenPostLoginThenReturnSuccess() {
         Response response = courierApiClient.loginCourier(courierLoginJson);
 
@@ -37,7 +41,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    @DisplayName("Система вернёт ошибку, если неправильно указать логин")
+    @DisplayName("Неверный логин")
+    @Description("Проверка что при неправильном логине возвращается ошибка")
     public void whenPostLoginWithIncorrectLoginThenReturnError() {
         courierLoginJson.setLogin(RandomStringUtils.random(15, true, true));
 
@@ -51,7 +56,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    @DisplayName("Система вернёт ошибку, если неправильно указать пароль")
+    @DisplayName("Неверный пароль")
+    @Description("Проверка что при неправильном пароле возвращается ошибка")
     public void whenPostLoginWithIncorrectPasswordThenReturnError() {
         courierLoginJson.setPassword(RandomStringUtils.random(15, true, true));
 
@@ -65,7 +71,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    @DisplayName("Если нет поля логин, запрос возвращает ошибку")
+    @DisplayName("Без поля Login")
+    @Description("Проверка что при отсутствии поля Login возвращается ошибка")
     public void whenPostLoginWithoutLoginThenReturnError() {
         courierLoginJson.setLogin(null);
 
@@ -80,7 +87,8 @@ public class LoginCourierTest {
 
     //TODO БЕЗ ПАРОЛЯ 500
 //    @Test
-    @DisplayName("Если нет поля пароль, запрос возвращает ошибку")
+    @DisplayName("Без поля Пароль")
+    @Description("Проверка что при отсутствии поля Password возвращается ошибка")
     public void whenPostLoginWithoutPasswordThenReturnError() {
         courierLoginJson.setPassword(null);
 
@@ -94,7 +102,8 @@ public class LoginCourierTest {
     }
 
     @Test
-    @DisplayName("Успешный запрос возвращает id")
+    @DisplayName("Запрос возвращает правильный код ответа")
+    @Description("Проверка что запрос на авторизацию возвращает правильный статус код - 200")
     public void whenPostLoginThenReturnId() {
         Response response = courierApiClient.loginCourier(courierLoginJson);
 
