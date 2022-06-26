@@ -42,7 +42,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Неверный логин")
-    @Description("Проверка что при неправильном логине возвращается ошибка")
+    @Description("Проверка что при неправильном логине возвращается ошибка - 404")
     public void whenPostLoginWithIncorrectLoginThenReturnError() {
         courierLoginJson.setLogin(RandomStringUtils.random(15, true, true));
 
@@ -57,7 +57,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Неверный пароль")
-    @Description("Проверка что при неправильном пароле возвращается ошибка")
+    @Description("Проверка что при неправильном пароле возвращается ошибка - 404")
     public void whenPostLoginWithIncorrectPasswordThenReturnError() {
         courierLoginJson.setPassword(RandomStringUtils.random(15, true, true));
 
@@ -72,7 +72,7 @@ public class LoginCourierTest {
 
     @Test
     @DisplayName("Без поля Login")
-    @Description("Проверка что при отсутствии поля Login возвращается ошибка")
+    @Description("Проверка что при отсутствии поля Login возвращается ошибка - 400")
     public void whenPostLoginWithoutLoginThenReturnError() {
         courierLoginJson.setLogin(null);
 
@@ -85,10 +85,9 @@ public class LoginCourierTest {
                 .statusCode(400);
     }
 
-    //TODO БЕЗ ПАРОЛЯ 500
-//    @Test
+    @Test
     @DisplayName("Без поля Пароль")
-    @Description("Проверка что при отсутствии поля Password возвращается ошибка")
+    @Description("Проверка что при отсутствии поля Password возвращается ошибка - 400")
     public void whenPostLoginWithoutPasswordThenReturnError() {
         courierLoginJson.setPassword(null);
 

@@ -91,7 +91,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать login")
-    @Description("Проверяет, что без передачи поля Login создания не происходит")
+    @Description("Проверяет, что без передачи поля Login создания не происходит - 400")
     public void whenPostCreateWithoutLoginThenReturnError() {
         courierCreateJson.setLogin(null);
         Response response = courierApiClient.createCourier(courierCreateJson);
@@ -105,7 +105,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
-    @Description("Проверяет, что без передачи поля Password создания не происходит")
+    @Description("Проверяет, что без передачи поля Password создания не происходит - 400")
     public void whenPostCreateWithoutPasswordThenReturnError() {
         courierCreateJson.setPassword(null);
         Response response = courierApiClient.createCourier(courierCreateJson);

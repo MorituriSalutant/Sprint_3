@@ -18,7 +18,7 @@ public class GenerateData {
     }
 
     @Step("Генерация логина и пароля")
-    public static void createAccountData(){
+    public static void createAccountData() {
         login = RandomStringUtils.random(15, true, true);
         password = RandomStringUtils.random(15, true, true);
         firstName = RandomStringUtils.random(15, true, true);
