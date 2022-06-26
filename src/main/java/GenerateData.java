@@ -11,14 +11,17 @@ public class GenerateData {
     private static String password;
     private static String firstName;
 
-    //Создать json для создания курьера - Логин, Пароль, Имя
-    @Step("Генерация и создание JSON с логином , паролем {GenerateData.password}, именем {GenerateData.firstName}")
+    @Step("Создание JSON Логин, Пароль, Имя")
     public static CourierCreateJson generateAccount() {
+        createAccountData();
+        return new CourierCreateJson(login, password, firstName);
+    }
+
+    @Step("Генерация логина и пароля")
+    public static void createAccountData(){
         login = RandomStringUtils.random(15, true, true);
         password = RandomStringUtils.random(15, true, true);
         firstName = RandomStringUtils.random(15, true, true);
-
-        return new CourierCreateJson(login, password, firstName);
     }
 
     //Удалить аккаунт, если он был создан

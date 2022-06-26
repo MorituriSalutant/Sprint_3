@@ -12,7 +12,7 @@ public class CourierApiClient {
 
     private final String BASE_URL = "https://qa-scooter.praktikum-services.ru";
 
-    @Step("Отправка запроса на создание курьера POST /api/v1/courier")
+    @Step("Отправка запроса на создание курьера POST /api/v1/courier | Логин = {jsonBody.login} Пароль = {jsonBody.password}")
     public Response createCourier(CourierCreateJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
@@ -21,7 +21,7 @@ public class CourierApiClient {
                 .post("/api/v1/courier");
     }
 
-    @Step("Отправка запроса на авторизацию курьера POST /api/v1/courier/login" )
+    @Step("Отправка запроса на авторизацию курьера POST /api/v1/courier/login | Логин = {jsonBody.login} Пароль = {jsonBody.password}" )
     public Response loginCourier(CourierLoginJson jsonBody) {
         return with()
                 .baseUri(BASE_URL)
@@ -30,7 +30,7 @@ public class CourierApiClient {
                 .post("/api/v1/courier/login");
     }
 
-    @Step("Отправка запроса на удаление курьера DELETE /api/v1/courier/id")
+    @Step("Отправка запроса на удаление курьера DELETE /api/v1/courier/{id} ")
     public void deleteCourier(String id) {
         with()
                 .baseUri(BASE_URL)
