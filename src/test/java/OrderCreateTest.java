@@ -110,8 +110,7 @@ public class OrderCreateTest {
 
         response.then()
                 .assertThat()
-                .body("track", notNullValue())
-                .and()
-                .statusCode(201);
+                .statusCode(201)
+                .body("track", notNullValue());
     }
 }

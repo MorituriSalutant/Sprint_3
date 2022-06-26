@@ -35,9 +35,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("id", notNullValue())
-                .and()
-                .statusCode(200);
+                .statusCode(200)
+                .body("id", notNullValue());
     }
 
     @Test
@@ -50,9 +49,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("message", equalTo("Учетная запись не найдена"))
-                .and()
-                .statusCode(404);
+                .statusCode(404)
+                .body("message", equalTo("Учетная запись не найдена"));
     }
 
     @Test
@@ -65,9 +63,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("message", equalTo("Учетная запись не найдена"))
-                .and()
-                .statusCode(404);
+                .statusCode(404)
+                .body("message", equalTo("Учетная запись не найдена"));
     }
 
     @Test
@@ -80,9 +77,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("message", equalTo("Недостаточно данных для входа"))
-                .and()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", equalTo("Недостаточно данных для входа"));
     }
 
     @Test
@@ -95,9 +91,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("message", equalTo("Недостаточно данных для входа"))
-                .and()
-                .statusCode(400);
+                .statusCode(400)
+                .body("message", equalTo("Недостаточно данных для входа"));
     }
 
     @Test
@@ -108,9 +103,8 @@ public class LoginCourierTest {
 
         response.then()
                 .assertThat()
-                .body("id", notNullValue())
-                .and()
-                .statusCode(200);
+                .statusCode(200)
+                .body("id", notNullValue());
     }
 
     @After

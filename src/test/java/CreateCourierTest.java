@@ -31,9 +31,8 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("ok", notNullValue())
-                .and()
-                .statusCode(201);
+                .statusCode(201)
+                .body("ok", notNullValue());
     }
 
     @Test
@@ -47,9 +46,8 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("message", equalTo("Этот логин уже используется. Попробуйте другой."))
-                .and()
-                .statusCode(409);
+                .statusCode(409)
+                .body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
     }
 
     @Test
@@ -61,9 +59,8 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("ok", notNullValue())
-                .and()
-                .statusCode(201);
+                .statusCode(201)
+                .body("ok", notNullValue());
     }
 
     @Test
@@ -73,6 +70,7 @@ public class CreateCourierTest {
         Response response = courierApiClient.createCourier(courierCreateJson);
 
         response.then()
+                .assertThat()
                 .statusCode(201);
     }
 
@@ -84,9 +82,8 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
-                .body("ok", equalTo(true))
-                .and()
-                .statusCode(201);
+                .statusCode(201)
+                .body("ok", equalTo(true));
     }
 
     @Test
@@ -98,9 +95,9 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
+                .statusCode(400)
                 .body("code", equalTo(400))
-                .body("message", equalTo("Недостаточно данных для создания учетной записи"))
-                .statusCode(400);
+                .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @Test
@@ -112,9 +109,9 @@ public class CreateCourierTest {
 
         response.then()
                 .assertThat()
+                .statusCode(400)
                 .body("code", equalTo(400))
-                .body("message", equalTo("Недостаточно данных для создания учетной записи"))
-                .statusCode(400);
+                .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     @After

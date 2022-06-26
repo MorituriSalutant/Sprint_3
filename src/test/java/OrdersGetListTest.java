@@ -25,9 +25,9 @@ public class OrdersGetListTest {
 
         response.then()
                 .assertThat()
+                .statusCode(200)
                 .body("orders", notNullValue())
                 .body("pageInfo", notNullValue())
-                .body("availableStations", notNullValue())
-                .statusCode(200);
+                .body("availableStations", notNullValue());
     }
 }
