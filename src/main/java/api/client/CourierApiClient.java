@@ -1,5 +1,6 @@
 package api.client;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

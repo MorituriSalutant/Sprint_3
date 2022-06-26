@@ -103,7 +103,7 @@ public class CreateCourierTest {
                 .statusCode(400);
     }
 
-    //TODO Не работает сервис без пароля
+    @Test
     @DisplayName("Чтобы создать курьера, нужно передать password")
     @Description("Проверяет, что без передачи поля Password создания не происходит")
     public void whenPostCreateWithoutPasswordThenReturnError() {
