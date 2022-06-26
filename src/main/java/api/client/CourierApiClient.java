@@ -2,7 +2,6 @@ package api.client;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
 import pojo.courieir.CourierCreateJson;
 import pojo.courieir.CourierLoginJson;
 
@@ -28,16 +27,9 @@ public class CourierApiClient {
                 .post("/api/v1/courier/login");
     }
 
-    public Response deleteMethodDeleteCourier(CourierLoginJson jsonBody){
-        return with()
+    public void deleteCourier(String id) {
+        with()
                 .baseUri(BASE_URL)
-                .delete("/api/v1/courier/");
-    }
-
-    public CourierCreateJson generateAccount() {
-        return new CourierCreateJson(
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true),
-                RandomStringUtils.random(15, true, true));
+                .delete("/api/v1/courier/" + id);
     }
 }

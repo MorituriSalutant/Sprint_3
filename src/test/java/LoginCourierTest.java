@@ -1,6 +1,4 @@
 import api.client.CourierApiClient;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -21,31 +19,14 @@ public class LoginCourierTest {
     @Before
     public void setUp() {
         courierApiClient = new CourierApiClient();
-
-        courierCreateJson = courierApiClient.generateAccount();
-        courierLoginJson = new CourierLoginJson(
-                courierCreateJson.getLogin(),
-                courierCreateJson.getPassword()
-        );
-
+        courierCreateJson = GenerateData.generateAccount();
+        courierLoginJson = new CourierLoginJson(courierCreateJson.getLogin(), courierCreateJson.getPassword());
         courierApiClient.createCourier(courierCreateJson);
     }
 
     @Test
     @DisplayName("Курьер может авторизоваться")
     public void whenPostLoginThenReturnSuccess() {
-        Response response = courierApiClient.loginCourier(courierLoginJson);
-
-        response.then()
-                .assertThat()
-                .body("id", notNullValue())
-                .and()
-                .statusCode(200);
-    }
-
-    @Test
-    @DisplayName("Для авторизации нужно передать все обязательные поля")
-    public void whenPostLoginThenReturnSuccessSame() {
         Response response = courierApiClient.loginCourier(courierLoginJson);
 
         response.then()
@@ -117,8 +98,6 @@ public class LoginCourierTest {
     public void whenPostLoginThenReturnId() {
         Response response = courierApiClient.loginCourier(courierLoginJson);
 
-        System.out.println(response.asString());
-
         response.then()
                 .assertThat()
                 .body("id", notNullValue())
@@ -126,11 +105,9 @@ public class LoginCourierTest {
                 .statusCode(200);
     }
 
-
     @After
     public void tearDown() {
-        Gson json = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println("Генерировали = " + json.toJson(courierCreateJson));
+        GenerateData.deleteAccount();
     }
 
 
