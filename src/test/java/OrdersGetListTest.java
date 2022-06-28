@@ -3,11 +3,10 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.notNullValue;
 
 @Feature("Получение заказов")
 public class OrdersGetListTest {
@@ -27,8 +26,8 @@ public class OrdersGetListTest {
         response.then()
                 .assertThat()
                 .statusCode(200)
-                .body("orders", not(emptyArray()))
+                .body("orders", notNullValue())
                 .body("pageInfo", notNullValue())
-                .body("availableStations", not(emptyArray()));
+                .body("availableStations", notNullValue());
     }
 }
