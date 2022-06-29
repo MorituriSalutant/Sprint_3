@@ -1,7 +1,7 @@
 import api.client.CourierApiClient;
+import com.github.javafaker.Faker;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
 import pojo.courieir.CourierCreateJson;
 import pojo.courieir.CourierLoginJson;
 
@@ -19,22 +19,23 @@ public class GenerateData {
 
     @Step("Генерация логина и пароля")
     public static void createAccountData() {
-        login = RandomStringUtils.random(15, true, true);
-        password = RandomStringUtils.random(15, true, true);
-        firstName = RandomStringUtils.random(15, true, true);
+        Faker faker = new Faker();
+        login = faker.name().username();
+        password = faker.artist().name() + faker.number().digits(5);
+        firstName = faker.name().firstName();
     }
 
     //Удалить аккаунт, если он был создан
     @Step("Удаление аккаунта, если он был создан")
     public static void deleteAccount() {
-        try {
-            CourierApiClient courierApiClient = new CourierApiClient();
-            CourierLoginJson courierLoginJson = new CourierLoginJson(login, password);
-            Response response = courierApiClient.loginCourier(courierLoginJson);
-            String id = response.then().extract().path("id").toString();
+        CourierApiClient courierApiClient = new CourierApiClient();
+        CourierLoginJson courierLoginJson = new CourierLoginJson(login, password);
+        Response responseLogin = courierApiClient.loginCourier(courierLoginJson);
+        if (responseLogin.statusCode() == 200) {
+            String id = responseLogin.then().extract().path("id").toString();
             courierApiClient.deleteCourier(id);
-        } catch (NullPointerException e) {
-            System.out.println("Удаление невозможно, аккаунт не создан");
+        } else {
+            System.out.println("Аккаунт не был создан");
         }
     }
 }
