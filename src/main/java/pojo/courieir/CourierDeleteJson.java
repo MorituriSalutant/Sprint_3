@@ -17,4 +17,11 @@ public class CourierDeleteJson {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "CourierDeleteJson{" +
+                "id=" + id +
+                '}';
+    }
 }
