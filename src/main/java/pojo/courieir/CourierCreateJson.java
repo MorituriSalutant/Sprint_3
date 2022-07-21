@@ -38,4 +38,12 @@ public class CourierCreateJson {
         this.firstName = firstName;
     }
 
+    @Override
+    public String toString() {
+        return "CourierCreateJson{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                '}';
+    }
 }
