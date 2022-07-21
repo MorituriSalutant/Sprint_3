@@ -24,7 +24,7 @@ public class CourierApiClient extends RestAssuredClient {
                 .post("/api/v1/courier/login");
     }
 
-    @Step("Отправка запроса на удаление курьера DELETE /api/v1/courier/{id} ")
+    @Step("Отправка запроса на удаление курьера DELETE /api/v1/courier/{id}")
     public void deleteCourier(String id) {
         reqSpec.delete("/api/v1/courier/" + id);
     }
