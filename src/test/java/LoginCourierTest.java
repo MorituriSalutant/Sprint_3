@@ -81,7 +81,7 @@ public class LoginCourierTest {
                 .body("message", equalTo("Недостаточно данных для входа"));
     }
 
-    @Test
+
     @DisplayName("Без поля Пароль")
     @Description("Проверка что при отсутствии поля Password возвращается ошибка - 400")
     public void whenPostLoginWithoutPasswordThenReturnError() {
